@@ -42,7 +42,8 @@ const navigate=useNavigate()
                 alert(res.mess)
                 localStorage.setItem("token", (res.token))
                 navigate("/")
-                } else {
+                } 
+                else {
                   alert(res.err)
                 }
           }))
@@ -108,7 +109,7 @@ const navigate=useNavigate()
                       </form>
                       <Stack pt={6}>
                           <Text align={'center'}>
-                              Create an account? <Link to={"/"}><span style={{color:"blue"}}>Signup</span></Link>
+                              Create an account? <Link to={"/signup"}><span style={{color:"blue"}}>Signup</span></Link>
                           </Text>
                       </Stack>
                   </Stack>

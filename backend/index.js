@@ -3,6 +3,8 @@ require("dotenv").config()
 const { connection } = require("./configs/db")
 const { userRoutes } = require("./routes/users.routes")
 const cors=require("cors")
+const { noteRoutes } = require("./routes/notes.routes")
+const { authentication } = require("./middleware/Authentication")
 
 
 const app = express()
@@ -14,6 +16,9 @@ app.get("/", (req, res) => {
 
 })
 app.use("/users",userRoutes)
+
+app.use(authentication)
+app.use("/book",noteRoutes)
 
 app.listen(process.env.port, async () => {
     try {

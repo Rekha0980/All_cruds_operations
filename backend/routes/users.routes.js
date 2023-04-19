@@ -10,14 +10,15 @@ const userRoutes = express.Router()
 userRoutes.post("/register", async (req, res) => {
     const { name, email, pass } = req.body
     try {
+        const data =await UserModel.findOne({email})
         bcrypt.hash(pass, 5, async (err, secure_pass) => {
-            if (err) {
-                console.log(err)
+            if (data) {
+                res.send({err:"Email already exists"})
             }
             else {
                 const user = new UserModel({ name, email,  pass: secure_pass })
                 await user.save()
-                res.send("Register")
+                res.send({"Register":"Register successfully"})
             }
         });
 
@@ -36,6 +37,7 @@ userRoutes.post("/login", async (req, res) => {
     try {
         const user = await UserModel.find({ email })
         const hased_pass = user[0].pass
+        console.log(hased_pass)
         console.log(user)
         if (user.length > 0) {
             bcrypt.compare(pass, hased_pass, (err, result) => {
@@ -44,7 +46,7 @@ userRoutes.post("/login", async (req, res) => {
                     res.send({ "mess": "login Done", "token": token })
                 }
                 else {
-                    res.send("wrong credential")
+                    res.send({"err":"wrong credential"})
                 }
             });
 
